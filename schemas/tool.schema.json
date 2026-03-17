@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://node-decrypt-community/schemas/tool.schema.json",
+  "title": "Node Decrypt Community Tool Schema",
+  "description": "Schema for reusable community tool files.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "template_version",
+    "tool",
+    "resource_setups",
+    "input_capabilities",
+    "output_capabilities",
+    "notes"
+  ],
+  "properties": {
+    "template_version": {
+      "type": "string",
+      "const": "community.tool.v4"
+    },
+    "tool": {
+      "$ref": "#/$defs/tool_meta"
+    },
+    "resource_setups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/resource_setup"
+      }
+    },
+    "input_capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/input_capability"
+      }
+    },
+    "output_capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/output_capability"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "snake_key": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "version_label": {
+      "type": "string",
+      "pattern": "^v[0-9]+$"
+    },
+    "structure": {
+      "type": "string",
+      "enum": [
+        "single",
+        "manifest"
+      ]
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "image",
+        "file",
+        "video",
+        "audio",
+        "json",
+        "url"
+      ]
+    },
+    "importance": {
+      "type": "string",
+      "enum": [
+        "must_have",
+        "recommended",
+        "optional"
+      ]
+    },
+    "tool_meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool_key",
+        "tool_name",
+        "summary",
+        "description",
+        "tool_type",
+        "usage_type",
+        "version_label"
+      ],
+      "properties": {
+        "tool_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "tool_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usage_type": {
+          "type": "string",
+          "enum": [
+            "browser_only",
+            "api_only",
+            "both"
+          ]
+        },
+        "version_label": {
+          "$ref": "#/$defs/version_label"
+        }
+      }
+    },
+    "resource_setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_key",
+        "resource_name",
+        "structure",
+        "resource_type",
+        "importance",
+        "description"
+      ],
+      "properties": {
+        "resource_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "resource_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "structure": {
+          "$ref": "#/$defs/structure"
+        },
+        "resource_type": {
+          "$ref": "#/$defs/resource_type"
+        },
+        "importance": {
+          "$ref": "#/$defs/importance"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "input_capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_key",
+        "capability_name",
+        "structure",
+        "resource_type",
+        "importance",
+        "description"
+      ],
+      "properties": {
+        "capability_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "capability_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "structure": {
+          "$ref": "#/$defs/structure"
+        },
+        "resource_type": {
+          "$ref": "#/$defs/resource_type"
+        },
+        "importance": {
+          "$ref": "#/$defs/importance"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "output_capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_key",
+        "capability_name",
+        "structure",
+        "resource_type",
+        "description"
+      ],
+      "properties": {
+        "capability_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "capability_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "structure": {
+          "$ref": "#/$defs/structure"
+        },
+        "resource_type": {
+          "$ref": "#/$defs/resource_type"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

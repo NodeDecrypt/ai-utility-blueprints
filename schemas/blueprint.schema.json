@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://node-decrypt-community/schemas/blueprint.schema.json",
+  "title": "Node Decrypt Community Blueprint Schema",
+  "description": "Schema for human-readable community blueprint files.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "template_version",
+    "blueprint",
+    "tool_refs",
+    "assets",
+    "steps",
+    "final_deliverables",
+    "notes"
+  ],
+  "properties": {
+    "template_version": {
+      "type": "string",
+      "const": "community.blueprint.v4"
+    },
+    "blueprint": {
+      "$ref": "#/$defs/blueprint_meta"
+    },
+    "tool_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/tool_ref"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "final_deliverables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "snake_key": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "version_label": {
+      "type": "string",
+      "pattern": "^v[0-9]+$"
+    },
+    "blueprint_meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blueprint_key",
+        "blueprint_name",
+        "summary",
+        "description",
+        "category",
+        "tags",
+        "version_label",
+        "output_type"
+      ],
+      "properties": {
+        "blueprint_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "blueprint_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "version_label": {
+          "$ref": "#/$defs/version_label"
+        },
+        "output_type": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "tool_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool_key",
+        "version_label"
+      ],
+      "properties": {
+        "tool_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "version_label": {
+          "$ref": "#/$defs/version_label"
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_key",
+        "asset_name",
+        "asset_type",
+        "stage",
+        "description"
+      ],
+      "properties": {
+        "asset_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "asset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset_type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "image",
+            "file",
+            "video",
+            "audio",
+            "json",
+            "url"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "input",
+            "intermediate",
+            "output"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "multiple": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "step_key",
+        "step_number",
+        "step_name",
+        "purpose",
+        "tool_key",
+        "what_you_do",
+        "inputs",
+        "outputs",
+        "check_before_next_step"
+      ],
+      "properties": {
+        "step_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "step_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "step_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool_key": {
+          "$ref": "#/$defs/snake_key"
+        },
+        "what_you_do": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/snake_key"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/snake_key"
+          }
+        },
+        "check_before_next_step": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

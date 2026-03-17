@@ -1,0 +1,94 @@
+{
+  "template_version": "community.blueprint.v4",
+
+  "blueprint": {
+    "blueprint_key": "your_blueprint_key",
+    "blueprint_name": "Your Blueprint Name",
+    "summary": "One-line summary of what this blueprint creates.",
+    "description": "A simple manual blueprint for humans to follow step by step.",
+    "category": "your_category",
+    "tags": ["tag_one", "tag_two"],
+    "version_label": "v1",
+    "output_type": "your_output_type"
+  },
+
+  "tool_refs": [
+    {
+      "tool_key": "your_tool_key",
+      "version_label": "v1"
+    }
+  ],
+
+  "assets": [
+    {
+      "asset_key": "main_input",
+      "asset_name": "Main Input",
+      "asset_type": "text",
+      "stage": "input",
+      "required": true,
+      "description": "Main starting input provided by the user."
+    },
+    {
+      "asset_key": "intermediate_result",
+      "asset_name": "Intermediate Result",
+      "asset_type": "text",
+      "stage": "intermediate",
+      "description": "An output created during the process."
+    },
+    {
+      "asset_key": "final_output",
+      "asset_name": "Final Output",
+      "asset_type": "file",
+      "stage": "output",
+      "description": "The final deliverable produced by this blueprint."
+    }
+  ],
+
+  "steps": [
+    {
+      "step_key": "step_one",
+      "step_number": 1,
+      "step_name": "First Step",
+      "purpose": "Explain what this step is meant to achieve.",
+      "tool_key": "your_tool_key",
+      "what_you_do": "Describe in plain language exactly what the human runner should do in this step.",
+      "inputs": [
+        "main_input"
+      ],
+      "outputs": [
+        "intermediate_result"
+      ],
+      "check_before_next_step": [
+        "Make sure the output is complete.",
+        "Make sure the output is usable for the next step."
+      ]
+    },
+    {
+      "step_key": "step_two",
+      "step_number": 2,
+      "step_name": "Second Step",
+      "purpose": "Explain what this step is meant to achieve.",
+      "tool_key": "your_tool_key",
+      "what_you_do": "Describe in plain language exactly what the human runner should do in this step.",
+      "inputs": [
+        "intermediate_result"
+      ],
+      "outputs": [
+        "final_output"
+      ],
+      "check_before_next_step": [
+        "Make sure the final output is complete.",
+        "Make sure the final output matches the intended result."
+      ]
+    }
+  ],
+
+  "final_deliverables": [
+    "final_output"
+  ],
+
+  "notes": [
+    "This format is written for human manual execution.",
+    "Do not include internal automation logic, selectors, URLs, auth data, or private secrets."
+  ]
+}

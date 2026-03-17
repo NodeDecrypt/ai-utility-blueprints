@@ -1,0 +1,66 @@
+{
+  "template_version": "community.tool.v4",
+
+  "tool": {
+    "tool_key": "your_tool_key",
+    "tool_name": "Your Tool Name",
+    "summary": "One-line summary of what this tool is used for.",
+    "description": "A reusable community tool definition.",
+    "tool_type": "your_tool_type",
+    "usage_type": "both",
+    "version_label": "v1"
+  },
+
+  "resource_setups": [
+    {
+      "resource_key": "tool_instruction",
+      "resource_name": "Tool Instruction",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "recommended",
+      "description": "A reusable single setup resource prepared for this tool."
+    },
+    {
+      "resource_key": "reference_pack",
+      "resource_name": "Reference Pack",
+      "structure": "manifest",
+      "resource_type": "file",
+      "importance": "optional",
+      "description": "A reusable grouped setup resource prepared for this tool."
+    }
+  ],
+
+  "input_capabilities": [
+    {
+      "capability_key": "text_input",
+      "capability_name": "Text Input",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "must_have",
+      "description": "Main text input the tool can accept."
+    },
+    {
+      "capability_key": "image_inputs",
+      "capability_name": "Image Inputs",
+      "structure": "manifest",
+      "resource_type": "image",
+      "importance": "recommended",
+      "description": "One or more images the tool can accept."
+    }
+  ],
+
+  "output_capabilities": [
+    {
+      "capability_key": "main_output",
+      "capability_name": "Main Output",
+      "structure": "single",
+      "resource_type": "file",
+      "description": "Primary output the tool can produce."
+    }
+  ],
+
+  "notes": [
+    "This is a reusable public community tool definition.",
+    "Do not include internal URLs, selectors, auth data, API keys, or hidden automation details."
+  ]
+}
