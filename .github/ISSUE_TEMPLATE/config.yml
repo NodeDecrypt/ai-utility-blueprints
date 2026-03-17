@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Node Decrypt Community contribution guide
+    url: https://github.com/NodeDecrypt/ai-utility-blueprints/blob/main/CONTRIBUTING.md
+    about: Read the contribution rules before opening an issue or pull request.

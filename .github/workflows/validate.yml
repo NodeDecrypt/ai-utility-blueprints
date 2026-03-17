@@ -1,0 +1,179 @@
+name: Validate Community Files
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install jsonschema
+
+      - name: Validate blueprint and tool files
+        run: |
+          python <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          ROOT = Path(".")
+          BLUEPRINT_SCHEMA_PATH = ROOT / "schemas" / "blueprint.schema.json"
+          TOOL_SCHEMA_PATH = ROOT / "schemas" / "tool.schema.json"
+
+          def load_json(path: Path):
+              try:
+                  return json.loads(path.read_text(encoding="utf-8"))
+              except Exception as e:
+                  fail(f"Failed to read JSON: {path} -> {e}")
+
+          def fail(message: str):
+              print(f"ERROR: {message}")
+              sys.exit(1)
+
+          def assert_true(condition: bool, message: str):
+              if not condition:
+                  fail(message)
+
+          def find_files(base: Path, filename: str):
+              if not base.exists():
+                  return []
+              return sorted(base.rglob(filename))
+
+          blueprint_schema = load_json(BLUEPRINT_SCHEMA_PATH)
+          tool_schema = load_json(TOOL_SCHEMA_PATH)
+
+          blueprint_validator = Draft202012Validator(blueprint_schema)
+          tool_validator = Draft202012Validator(tool_schema)
+
+          blueprint_files = find_files(ROOT / "blueprints", "blueprint.json")
+          tool_files = find_files(ROOT / "tools", "tool.json")
+
+          print(f"Found {len(blueprint_files)} blueprint file(s)")
+          print(f"Found {len(tool_files)} tool file(s)")
+
+          # Validate all tool files first and build an index for blueprint reference checks.
+          tool_versions = {}
+          for tool_file in tool_files:
+              data = load_json(tool_file)
+
+              errors = sorted(tool_validator.iter_errors(data), key=lambda e: list(e.path))
+              if errors:
+                  for err in errors:
+                      path_str = ".".join(str(x) for x in err.path) or "<root>"
+                      print(f"{tool_file}: {path_str}: {err.message}")
+                  fail(f"Schema validation failed for tool file: {tool_file}")
+
+              tool_meta = data["tool"]
+              tool_key = tool_meta["tool_key"]
+              version_label = tool_meta["version_label"]
+
+              # Expected path: tools/<tool-slug>/<version>/tool.json
+              parts = tool_file.parts
+              try:
+                  idx = parts.index("tools")
+              except ValueError:
+                  fail(f"Tool file is not inside tools/: {tool_file}")
+
+              assert_true(len(parts) >= idx + 4, f"Unexpected tool file path shape: {tool_file}")
+              folder_version = parts[idx + 2]
+              assert_true(folder_version == version_label,
+                          f"Tool version folder mismatch in {tool_file}: folder={folder_version}, json={version_label}")
+
+              tool_versions.setdefault(tool_key, set()).add(version_label)
+
+          # Validate blueprint files and check references.
+          for blueprint_file in blueprint_files:
+              data = load_json(blueprint_file)
+
+              errors = sorted(blueprint_validator.iter_errors(data), key=lambda e: list(e.path))
+              if errors:
+                  for err in errors:
+                      path_str = ".".join(str(x) for x in err.path) or "<root>"
+                      print(f"{blueprint_file}: {path_str}: {err.message}")
+                  fail(f"Schema validation failed for blueprint file: {blueprint_file}")
+
+              blueprint_meta = data["blueprint"]
+              blueprint_key = blueprint_meta["blueprint_key"]
+              version_label = blueprint_meta["version_label"]
+
+              # Expected path: blueprints/<blueprint-slug>/<version>/blueprint.json
+              parts = blueprint_file.parts
+              try:
+                  idx = parts.index("blueprints")
+              except ValueError:
+                  fail(f"Blueprint file is not inside blueprints/: {blueprint_file}")
+
+              assert_true(len(parts) >= idx + 4, f"Unexpected blueprint file path shape: {blueprint_file}")
+              folder_version = parts[idx + 2]
+              assert_true(folder_version == version_label,
+                          f"Blueprint version folder mismatch in {blueprint_file}: folder={folder_version}, json={version_label}")
+
+              tool_refs = data["tool_refs"]
+              assets = data["assets"]
+              steps = data["steps"]
+              final_deliverables = data["final_deliverables"]
+
+              tool_ref_map = {}
+              for ref in tool_refs:
+                  tool_key = ref["tool_key"]
+                  ref_version = ref["version_label"]
+                  assert_true(tool_key in tool_versions,
+                              f"{blueprint_file}: tool_refs contains unknown tool_key '{tool_key}'")
+                  assert_true(ref_version in tool_versions[tool_key],
+                              f"{blueprint_file}: tool_refs points to missing version '{ref_version}' for tool '{tool_key}'")
+                  tool_ref_map[tool_key] = ref_version
+
+              asset_keys = [asset["asset_key"] for asset in assets]
+              assert_true(len(asset_keys) == len(set(asset_keys)),
+                          f"{blueprint_file}: duplicate asset_key found")
+
+              step_numbers = [step["step_number"] for step in steps]
+              assert_true(len(step_numbers) == len(set(step_numbers)),
+                          f"{blueprint_file}: duplicate step_number found")
+              assert_true(step_numbers == sorted(step_numbers),
+                          f"{blueprint_file}: step_number values must be in ascending order")
+
+              step_keys = [step["step_key"] for step in steps]
+              assert_true(len(step_keys) == len(set(step_keys)),
+                          f"{blueprint_file}: duplicate step_key found")
+
+              asset_key_set = set(asset_keys)
+              tool_key_set = set(tool_ref_map.keys())
+
+              for step in steps:
+                  step_key = step["step_key"]
+                  step_tool_key = step["tool_key"]
+
+                  assert_true(step_tool_key in tool_key_set,
+                              f"{blueprint_file}: step '{step_key}' uses tool_key '{step_tool_key}' not declared in tool_refs")
+
+                  for input_key in step["inputs"]:
+                      assert_true(input_key in asset_key_set,
+                                  f"{blueprint_file}: step '{step_key}' input '{input_key}' not found in assets")
+
+                  for output_key in step["outputs"]:
+                      assert_true(output_key in asset_key_set,
+                                  f"{blueprint_file}: step '{step_key}' output '{output_key}' not found in assets")
+
+              for deliverable in final_deliverables:
+                  assert_true(deliverable in asset_key_set,
+                              f"{blueprint_file}: final_deliverable '{deliverable}' not found in assets")
+
+          print("Validation passed.")
+          PY
