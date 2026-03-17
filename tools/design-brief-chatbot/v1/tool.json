@@ -1,0 +1,61 @@
+{
+  "template_version": "community.tool.v4",
+  "tool": {
+    "tool_key": "design_brief_chatbot",
+    "tool_name": "Design Brief Chatbot",
+    "summary": "turning requirement summaries into stronger design briefs",
+    "description": "A reusable community tool definition for design-brief creation.",
+    "tool_type": "text_assistant",
+    "usage_type": "both",
+    "version_label": "v1"
+  },
+  "resource_setups": [
+    {
+      "resource_key": "tool_instruction",
+      "resource_name": "Tool Instruction",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "recommended",
+      "description": "A reusable instruction resource prepared for this tool."
+    },
+    {
+      "resource_key": "reference_pack",
+      "resource_name": "Reference Pack",
+      "structure": "manifest",
+      "resource_type": "file",
+      "importance": "optional",
+      "description": "A reusable grouped reference resource prepared for this tool."
+    }
+  ],
+  "input_capabilities": [
+    {
+      "capability_key": "main_input",
+      "capability_name": "Design Inputs",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "must_have",
+      "description": "Main design inputs the tool can accept."
+    },
+    {
+      "capability_key": "supporting_context",
+      "capability_name": "Supporting Context",
+      "structure": "manifest",
+      "resource_type": "file",
+      "importance": "optional",
+      "description": "Optional grouped context files or reference materials."
+    }
+  ],
+  "output_capabilities": [
+    {
+      "capability_key": "main_output",
+      "capability_name": "Design Brief",
+      "structure": "single",
+      "resource_type": "text",
+      "description": "Primary design brief returned by the tool."
+    }
+  ],
+  "notes": [
+    "This is a reusable public community tool definition for Node Decrypt.",
+    "It does not include internal URLs, selectors, auth data, API keys, or hidden automation details."
+  ]
+}

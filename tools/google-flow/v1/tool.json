@@ -1,0 +1,81 @@
+{
+  "template_version": "community.tool.v4",
+
+  "tool": {
+    "tool_key": "google_flow",
+    "tool_name": "Google Flow",
+    "summary": "Generate images from structured text and optional visual inputs.",
+    "description": "A reusable community tool definition for image generation.",
+    "tool_type": "image_generator",
+    "usage_type": "both",
+    "version_label": "v1"
+  },
+
+  "resource_setups": [
+    {
+      "resource_key": "tool_instruction",
+      "resource_name": "Tool Instruction",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "recommended",
+      "description": "A reusable instruction resource prepared for this tool."
+    },
+    {
+      "resource_key": "knowledge_pack",
+      "resource_name": "Knowledge Pack",
+      "structure": "manifest",
+      "resource_type": "file",
+      "importance": "optional",
+      "description": "A reusable grouped reference resource prepared for this tool."
+    }
+  ],
+
+  "input_capabilities": [
+    {
+      "capability_key": "text_instruction",
+      "capability_name": "Text Instruction",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "must_have",
+      "description": "Main text instruction or prompt used for generation."
+    },
+    {
+      "capability_key": "image_inputs",
+      "capability_name": "Image Inputs",
+      "structure": "manifest",
+      "resource_type": "image",
+      "importance": "recommended",
+      "description": "One or more supporting images that can be used during generation."
+    },
+    {
+      "capability_key": "ratio_or_size",
+      "capability_name": "Ratio or Size",
+      "structure": "single",
+      "resource_type": "text",
+      "importance": "optional",
+      "description": "Target ratio or size for the final output."
+    }
+  ],
+
+  "output_capabilities": [
+    {
+      "capability_key": "generated_image",
+      "capability_name": "Generated Image",
+      "structure": "single",
+      "resource_type": "image",
+      "description": "Primary final image output."
+    },
+    {
+      "capability_key": "generation_text",
+      "capability_name": "Generation Text",
+      "structure": "single",
+      "resource_type": "text",
+      "description": "Optional text returned by the tool if available."
+    }
+  ],
+
+  "notes": [
+    "This is a reusable public community tool definition for Node Decrypt.",
+    "It does not include internal URLs, selectors, auth data, API keys, or hidden automation details."
+  ]
+}

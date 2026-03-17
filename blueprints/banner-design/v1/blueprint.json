@@ -1,0 +1,230 @@
+{
+  "template_version": "community.blueprint.v4",
+
+  "blueprint": {
+    "blueprint_key": "banner_design",
+    "blueprint_name": "Banner Design",
+    "summary": "Create a banner image from brand, product, and design inputs.",
+    "description": "A simple manual blueprint for humans to follow step by step.",
+    "category": "design",
+    "tags": ["banner", "design", "image-generation"],
+    "version_label": "v1",
+    "output_type": "image"
+  },
+
+  "tool_refs": [
+    {
+      "tool_key": "business_brief_chatbot",
+      "version_label": "v1"
+    },
+    {
+      "tool_key": "design_brief_chatbot",
+      "version_label": "v1"
+    },
+    {
+      "tool_key": "design_specs_chatbot",
+      "version_label": "v1"
+    },
+    {
+      "tool_key": "google_flow",
+      "version_label": "v1"
+    }
+  ],
+
+  "assets": [
+    {
+      "asset_key": "brand_name",
+      "asset_name": "Brand Name",
+      "asset_type": "text",
+      "stage": "input",
+      "required": true,
+      "description": "Brand or business name."
+    },
+    {
+      "asset_key": "logo_image",
+      "asset_name": "Logo Image",
+      "asset_type": "image",
+      "stage": "input",
+      "required": false,
+      "description": "Brand logo."
+    },
+    {
+      "asset_key": "product_images",
+      "asset_name": "Product Images",
+      "asset_type": "image",
+      "stage": "input",
+      "required": true,
+      "multiple": true,
+      "description": "Images of the product."
+    },
+    {
+      "asset_key": "design_ref_images",
+      "asset_name": "Design Reference Images",
+      "asset_type": "image",
+      "stage": "input",
+      "required": false,
+      "multiple": true,
+      "description": "Reference designs for inspiration."
+    },
+    {
+      "asset_key": "headline",
+      "asset_name": "Headline",
+      "asset_type": "text",
+      "stage": "input",
+      "required": false,
+      "description": "Main banner headline."
+    },
+    {
+      "asset_key": "subheadline",
+      "asset_name": "Subheadline",
+      "asset_type": "text",
+      "stage": "input",
+      "required": false,
+      "description": "Supporting text."
+    },
+    {
+      "asset_key": "platform",
+      "asset_name": "Platform",
+      "asset_type": "text",
+      "stage": "input",
+      "required": false,
+      "description": "Target platform."
+    },
+    {
+      "asset_key": "layout_ratio",
+      "asset_name": "Layout Ratio",
+      "asset_type": "text",
+      "stage": "input",
+      "required": false,
+      "description": "Desired banner ratio."
+    },
+    {
+      "asset_key": "design_requirement_summary",
+      "asset_name": "Design Requirement Summary",
+      "asset_type": "text",
+      "stage": "intermediate",
+      "description": "Summary of business and design needs."
+    },
+    {
+      "asset_key": "professional_design_brief",
+      "asset_name": "Professional Design Brief",
+      "asset_type": "text",
+      "stage": "intermediate",
+      "description": "Professional creative/design brief."
+    },
+    {
+      "asset_key": "professional_design_specs",
+      "asset_name": "Professional Design Specs",
+      "asset_type": "text",
+      "stage": "intermediate",
+      "description": "Detailed specs for final image generation."
+    },
+    {
+      "asset_key": "final_banner_image",
+      "asset_name": "Final Banner Image",
+      "asset_type": "image",
+      "stage": "output",
+      "description": "Finished banner design."
+    }
+  ],
+
+  "steps": [
+    {
+      "step_key": "create_requirement_summary",
+      "step_number": 1,
+      "step_name": "Create Requirement Summary",
+      "purpose": "Turn raw business and design inputs into a clear requirement summary.",
+      "tool_key": "business_brief_chatbot",
+      "what_you_do": "Open the business brief chatbot, provide the brand and design inputs, include any relevant assets, and ask it to summarize the business need and design direction.",
+      "inputs": [
+        "brand_name",
+        "logo_image",
+        "product_images",
+        "design_ref_images",
+        "headline",
+        "subheadline",
+        "platform",
+        "layout_ratio"
+      ],
+      "outputs": [
+        "design_requirement_summary"
+      ],
+      "check_before_next_step": [
+        "Make sure the summary is clear and complete.",
+        "Make sure the summary reflects the product, audience, and visual direction."
+      ]
+    },
+    {
+      "step_key": "create_professional_design_brief",
+      "step_number": 2,
+      "step_name": "Create Professional Design Brief",
+      "purpose": "Turn the requirement summary into a stronger creative brief.",
+      "tool_key": "design_brief_chatbot",
+      "what_you_do": "Open the design brief chatbot, provide the requirement summary and the relevant visual assets, then ask it to write a professional design brief.",
+      "inputs": [
+        "design_requirement_summary",
+        "logo_image",
+        "product_images",
+        "design_ref_images"
+      ],
+      "outputs": [
+        "professional_design_brief"
+      ],
+      "check_before_next_step": [
+        "Make sure the brief is specific enough for a designer or image tool to follow.",
+        "Make sure the tone, layout direction, and visual style are coherent."
+      ]
+    },
+    {
+      "step_key": "create_design_specs",
+      "step_number": 3,
+      "step_name": "Create Design Specs",
+      "purpose": "Turn the design brief into production-ready design specs.",
+      "tool_key": "design_specs_chatbot",
+      "what_you_do": "Open the design specs chatbot, provide the professional design brief and supporting assets, then ask it to generate detailed design specs for banner creation.",
+      "inputs": [
+        "professional_design_brief",
+        "logo_image",
+        "product_images",
+        "design_ref_images"
+      ],
+      "outputs": [
+        "professional_design_specs"
+      ],
+      "check_before_next_step": [
+        "Make sure the specs are detailed enough to generate the banner.",
+        "Make sure the specs match the intended ratio and platform if provided."
+      ]
+    },
+    {
+      "step_key": "generate_final_banner",
+      "step_number": 4,
+      "step_name": "Generate Final Banner Image",
+      "purpose": "Create the finished banner image from the final specs.",
+      "tool_key": "google_flow",
+      "what_you_do": "Open Google Flow, provide the final design specs and needed visual assets, set the desired ratio if needed, then generate the banner image.",
+      "inputs": [
+        "professional_design_specs",
+        "logo_image",
+        "product_images",
+        "layout_ratio"
+      ],
+      "outputs": [
+        "final_banner_image"
+      ],
+      "check_before_next_step": [
+        "Make sure the final image is complete and usable.",
+        "Make sure the final banner matches the design specs closely."
+      ]
+    }
+  ],
+
+  "final_deliverables": [
+    "final_banner_image"
+  ],
+
+  "notes": [
+    "This is a public community blueprint for Node Decrypt.",
+    "It is written for human manual execution and avoids internal automation details."
+  ]
+}
