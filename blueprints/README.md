@@ -41,8 +41,9 @@ blueprints/<blueprint-slug>/<version>/
 ├── README.md
 ├── blueprint.json
 ├── examples/
-│   ├── sample-input.md
-│   └── sample-output.md
+│   ├── assets/
+│   ├── example-1.md
+│   └── outputs/
 └── preview/
     └── preview.png
 ```
@@ -113,14 +114,19 @@ This is the main file used to represent the blueprint in a consistent way across
 
 ### `examples/`
 
-Example input and output files for the blueprint.
+Worked examples for the blueprint.
 
 Recommended:
 
-* `sample-input.md`
-* `sample-output.md`
+* `assets/` for non-text example assets
+* `example-1.md` for one full process example with per-step input/output mapping
+* `outputs/` for additional final-output-only examples
 
 These help new users understand how the blueprint is meant to be used.
+
+Text assets can be written inline in `example-1.md`.
+
+Large media should be linked in markdown instead of committed as heavy files.
 
 ### `preview/`
 

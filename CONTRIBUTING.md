@@ -225,8 +225,9 @@ blueprints/<blueprint-slug>/<version>/
 ├── README.md
 ├── blueprint.json
 ├── examples/
-│   ├── sample-input.md
-│   └── sample-output.md
+│   ├── assets/
+│   ├── example-1.md
+│   └── outputs/
 └── preview/
 ```
 
@@ -350,10 +351,15 @@ Examples are strongly encouraged.
 
 ### For blueprints
 
-Recommended example files:
+Required example structure:
 
-* `examples/sample-input.md`
-* `examples/sample-output.md`
+* `examples/assets/` for non-text assets
+* `examples/example-1.md` for one full process example with per-step input/output mapping
+* `examples/outputs/` for additional final-output-only examples (no process)
+
+Text assets can be written inline in `examples/example-1.md`.
+
+If media files are large, link them from markdown instead of committing them.
 
 ### For tools
 

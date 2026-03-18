@@ -55,7 +55,7 @@ blueprints/<blueprint-slug>/<version>/blueprint.json
 ```
 
 4. Add the matching `README.md`
-5. Add `examples/`
+5. Add `examples/assets/`, `examples/example-1.md`, and `examples/outputs/`
 6. Add `preview/` if available
 
 ### For a new tool

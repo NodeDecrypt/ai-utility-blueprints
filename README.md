@@ -57,7 +57,7 @@ Safe to include here:
 - community-safe tool descriptions
 - reusable public setup resources
 - public example files
-- sample inputs and outputs
+- worked example markdown and lightweight preview assets
 
 Do **not** include:
 
@@ -96,6 +96,9 @@ ai-utility-blueprints/
 │           ├── README.md
 │           ├── blueprint.json
 │           ├── examples/
+│           │   ├── assets/
+│           │   ├── example-1.md
+│           │   └── outputs/
 │           └── preview/
 └── tools/
     └── <tool-slug>/
@@ -146,8 +149,9 @@ blueprints/<blueprint-slug>/<version>/
 ├── README.md
 ├── blueprint.json
 ├── examples/
-│   ├── sample-input.md
-│   └── sample-output.md
+│   ├── assets/
+│   ├── example-1.md
+│   └── outputs/
 └── preview/
     └── preview.png
 ```
@@ -156,8 +160,20 @@ blueprints/<blueprint-slug>/<version>/
 
 * `README.md` - quick human overview
 * `blueprint.json` - structured blueprint definition
-* `examples/` - example input and output
+* `examples/` - worked example with assets and per-step input/output mapping
 * `preview/` - optional visual preview
+
+### How examples should be organized
+
+Inside each blueprint pack:
+
+- `examples/assets/` stores non-text example assets
+- `examples/example-1.md` stores one full process example with per-step inputs/outputs
+- `examples/outputs/` stores additional final-output-only examples without process details
+
+Text assets can stay inline in `examples/example-1.md`.
+
+Large media should be linked in markdown instead of committed to the repo.
 
 ---
 
