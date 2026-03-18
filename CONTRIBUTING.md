@@ -2,7 +2,7 @@
 
 Thanks for contributing.
 
-This repo is a public library of human-readable blueprints and reusable tool definitions. The goal is to make it easy for people to share and follow manual creation recipes, while keeping the structure clean enough to support future transmission into Node Decrypt.
+This repo is a public library of human-readable blueprints and reusable tool definitions. The goal is to make it easy for people to share and follow manual creation recipes.
 
 Please read this guide before opening a pull request.
 
@@ -17,10 +17,7 @@ When contributing here, follow these principles:
 - keep the structure simple
 - keep keys stable
 - keep tools reusable
-- avoid internal platform details
 - do not include secrets
-
-This repo is for public community usage, not internal automation configuration.
 
 ---
 
@@ -42,15 +39,12 @@ You can contribute:
 
 Do **not** contribute:
 
-- real tool URLs
-- selectors
+- real tool URLs (if it's private or secret)
 - cookies
 - auth/session files
 - tokens or API keys
 - private automation logic
 - private prompt IP that should not be public
-- hidden internal runner setup
-- internal system binding details
 
 If a file or detail would be risky to publish publicly, it does not belong in this repo.
 
@@ -265,7 +259,7 @@ A good blueprint should:
 
 ## Tool contribution requirements
 
-A tool contribution should describe a reusable tool family, not one blueprint-only setup.
+A tool contribution should describe a reusable tool family.
 
 ### Required files
 
