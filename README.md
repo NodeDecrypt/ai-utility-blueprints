@@ -1,8 +1,8 @@
 # Node Decrypt Community
 
-A public library of human-readable blueprints and reusable tool definitions for the community.
+A public library of ai utility blueprints and reusable tool definitions for the community.
 
-This repo is designed for people who want to follow and share practical creation recipes without needing to understand Node Decrypt internals. Each blueprint is written as a simple manual step-by-step flow. Each tool is defined as a reusable community-safe reference that can support multiple blueprints.
+This repo is designed for people who want to follow and share practical creation recipes. Each blueprint is written as a simple manual step-by-step flow. Each tool is defined as a reusable community-safe reference that can support multiple blueprints.
 
 ---
 
@@ -10,26 +10,22 @@ This repo is designed for people who want to follow and share practical creation
 
 This repo contains two main libraries:
 
-- `blueprints/` - flat manual recipes that humans can follow step by step
+- `blueprints/` - manual recipes that anyone can follow step by step
 - `tools/` - reusable tool definitions and tool resource folders
-
-This repo is **not** the runtime spec for Node Decrypt, and it does **not** contain internal automation logic.
 
 ---
 
 ## What is a blueprint
 
-A blueprint is a human-readable recipe for creating an output.
+A blueprint is a recipe of multiple action for creating an output.
 
-A blueprint tells people:
+A blueprint tells:
 
-- what they are trying to make
-- what assets they need
-- which tools they use
+- what you are trying to make
+- what assets you need
+- which tools you use
 - which steps to follow
 - what the final deliverable is
-
-A blueprint is intentionally simple. It does not use internal platform terms like action, vibe, runner, sync, async, policy, selector, or locator.
 
 ---
 
@@ -37,7 +33,7 @@ A blueprint is intentionally simple. It does not use internal platform terms lik
 
 A tool is a reusable community definition of a tool family.
 
-A tool tells people:
+A tool tells:
 
 - what the tool is
 - what kind of work it is good for
@@ -65,13 +61,10 @@ Safe to include here:
 
 Do **not** include:
 
-- real tool URLs
-- selectors
+- real tool URLs if it's private or secret
 - cookies
 - auth/session data
 - tokens or API keys
-- hidden internal automation logic
-- secret prompts or private IP that should not be public
 
 ---
 
@@ -135,6 +128,12 @@ If you want to understand a tool:
 4. Read `README.md`
 5. Open `tool.json`
 6. Browse `resources/single/` and `resources/manifests/`
+
+If it's hard to understand, you can access our microsite for easier guidelin
+
+1. Go to `https://community-utility-blueprints.NodeDecrypt.com`
+2. Select the menu of blueprint or tool
+3. Search with the same name/ key name from this repo (`blueprint_key` for blueprint, `tool_key` for tool)
 
 ---
 
@@ -214,7 +213,7 @@ Each manifest folder should include a small `README.md` that explains what the f
 
 ## Versioning
 
-Blueprints and tools version independently.
+Blueprints and tools version independently. This will help us bring your blueprints & tools to our website at     `https://community-utility-blueprints.NodeDecrypt.com` easier. 
 
 Examples:
 
