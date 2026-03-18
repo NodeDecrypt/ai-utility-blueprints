@@ -54,7 +54,6 @@ Because this is a public repo, contributors must not publish:
 - cookies
 - session files
 - private URLs intended for internal-only use
-- selectors or automation details that should stay private
 - hidden private prompt assets
 - confidential internal documents
 - any private or unsafe materials that do not belong in a public community repo
