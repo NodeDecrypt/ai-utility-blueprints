@@ -62,8 +62,8 @@
       "asset_name": "Design Reference Images",
       "asset_type": "image",
       "stage": "input",
-      "required": false,
-      "multiple": true,
+      "required": true,
+      "multiple": false,
       "description": "Reference designs for inspiration."
     },
     {
@@ -71,7 +71,7 @@
       "asset_name": "Headline",
       "asset_type": "text",
       "stage": "input",
-      "required": false,
+      "required": true,
       "description": "Main banner headline."
     },
     {
@@ -95,7 +95,7 @@
       "asset_name": "Layout Ratio",
       "asset_type": "text",
       "stage": "input",
-      "required": false,
+      "required": true,
       "description": "Desired banner ratio."
     },
     {
