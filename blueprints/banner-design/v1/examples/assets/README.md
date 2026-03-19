@@ -24,7 +24,7 @@ Text assets are written inline in `examples/example-1.md`.
 | `design_ref_images` | `examples/assets/design_ref_images/` src="/design_ref_images/0bbec2b6-a611-41b4-95d0-65375093c726.PNG" | optional |
 | `final_banner_image` | `examples/assets/final_banner_image/` | preview-only output |
 
-![design_ref_image](/design_ref_images/0bbec2b6-a611-41b4-95d0-65375093c726.PNG)
+![design_ref_image](/examples/assets/design_ref_images/0bbec2b6-a611-41b4-95d0-65375093c726.PNG)
 
 Text assets managed inline in `examples/example-1.md`:
 
